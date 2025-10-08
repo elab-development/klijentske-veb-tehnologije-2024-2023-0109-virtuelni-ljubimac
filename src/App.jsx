@@ -4,8 +4,7 @@ import Navbar from './api/components/Navbar';
 import Home from './pages/Home';
 import Adopt from './pages/Adopt';
 
-
-function App() {
+const App = () => {
 return (
 <Router>
 <Navbar />
@@ -15,6 +14,6 @@ return (
 </Routes>
 </Router>
 );
-}
+};
 
 export default App;
