@@ -1,24 +1,39 @@
 import React, { useState } from 'react';
+import PetStats from '../api/components/PetStats';
+import RandomTip from '../api/components/RandomTip';
+import Pet from '../models/Pet';
 
 const Adopt = () => {
-const [glad, setGlad] = useState(50);
-const [sreca, setSreca] = useState(50);
-const [energija, setEnergija] = useState(50);
+const [pet] = useState(new Pet('Ljubimac'));
+const [history, setHistory] = useState([]);
 
-const hranjenje = () => setGlad(prev => Math.min(prev + 10, 100));
-const igranje = () => setSreca(prev => Math.min(prev + 10, 100));
-const spavanje = () => setEnergija(prev => Math.min(prev + 10, 100));
+const handleAction = (action) => {
+switch(action){
+case 'hranjenje': pet.feed(); break;
+case 'igranje': pet.play(); break;
+case 'spavanje': pet.sleep(); break;
+default: break;
+}
+setHistory(prev => [...prev, `${action} - ${new Date().toLocaleTimeString()}`]);
+}
 
 return (
 <div style={{ padding: '20px' }}>
-<h1>Adopt your pet!</h1>
-<p>Glad: {glad}</p>
-<p>Sreća: {sreca}</p>
-<p>Energija: {energija}</p>
+<h1>Adopt your pet: {pet.name}</h1>
+<PetStats glad={pet.hunger} sreca={pet.happiness} energija={pet.energy} />
 
-<button onClick={hranjenje}>Hranjenje</button>
-<button onClick={igranje}>Igranje</button>
-<button onClick={spavanje}>Spavanje</button>
+<button onClick={() => handleAction('hranjenje')}>Hranjenje</button>
+<button onClick={() => handleAction('igranje')}>Igranje</button>
+<button onClick={() => handleAction('spavanje')}>Spavanje</button>
+
+<RandomTip />
+
+<div style={{ marginTop: '20px' }}>
+<h3>Istorija aktivnosti:</h3>
+<ul>
+{history.map((item,index) => <li key={index}>{item}</li>)}
+</ul>
+</div>
 </div>
 );
 };
