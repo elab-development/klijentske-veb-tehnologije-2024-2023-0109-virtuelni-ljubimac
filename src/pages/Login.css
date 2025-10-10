@@ -1,0 +1,79 @@
+/* Pozadina i centriranje */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 60px); /* Ako navbar ima 60px */
+    background: linear-gradient(to right, #cb4011, #fcb425);
+    padding: 20px;
+  }
+  
+  /* Kutija za login/registraciju */
+  .auth-box {
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  /* Tabovi */
+  .auth-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .auth-tabs button {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    background: none;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #a3761b;
+    transition: all 0.3s;
+  }
+  
+  .auth-tabs button.active {
+    color: #fff;
+    background: #cb4f11;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  /* Forma */
+  .auth-form input {
+    width: 100%;
+    padding: 12px 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.3s;
+  }
+  
+  .auth-form input:focus {
+    border-color: #cb4c11;
+  }
+  
+  /* Dugme */
+  .auth-submit {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(to right, #cb1111, #fc9425);
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .auth-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  

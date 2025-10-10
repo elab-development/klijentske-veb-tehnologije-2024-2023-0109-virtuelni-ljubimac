@@ -1,29 +1,52 @@
 import React, { useState } from "react";
+import happyDog from "../images/happydog.jpg";
+import neutralDog from "../images/kk.jpg";
+import sadDog from "../images/sadDog.jpg";
+import "./Care.css";
 
 const Care: React.FC = () => {
   const [hunger, setHunger] = useState(50);
   const [energy, setEnergy] = useState(50);
   const [happiness, setHappiness] = useState(50);
 
-  return (
-    <div style={{ textAlign: "center" }}>
-      <h1>Briga o ljubimcu</h1>
-      <p>Glad: {hunger}</p>
-      <p>Energija: {energy}</p>
-      <p>Sreća: {happiness}</p>
+  // Određivanje slike psa prema raspoloženju
+  const getDogImage = () => {
+    if (hunger <30 && happiness > 70 && energy > 70) return happyDog;
+    if (hunger >70 || happiness < 30 || energy < 30) return sadDog;
+    return neutralDog;
+  };
 
-      <button onClick={() => setHunger(Math.max(0, hunger - 10))}>
-        Nahrani 🥩
-      </button>
-      <button onClick={() => setEnergy(Math.min(100, energy + 10))}>
-        Odmori 😴
-      </button>
-      <button onClick={() => setHappiness(Math.min(100, happiness + 10))}>
-        Igraj se 🎾
-      </button>
+  return (
+    <div className="care-container">
+      <h1>Briga o ljubimcu</h1>
+      <img src={getDogImage()} alt="Ljubimac" className="dog-image" />
+
+      <div className="status-bar">
+        <label>Glad</label>
+        <div className="bar">
+          <div className="fill" style={{ width: `${hunger}%`, backgroundColor: "#ff4d4d" }}></div>
+        </div>
+
+        <label>Energija</label>
+        <div className="bar">
+          <div className="fill" style={{ width: `${energy}%`, backgroundColor: "#4da6ff" }}></div>
+        </div>
+
+        <label>Sreća</label>
+        <div className="bar">
+          <div className="fill" style={{ width: `${happiness}%`, backgroundColor: "#4dff88" }}></div>
+        </div>
+      </div>
+
+      <div className="buttons">
+        <button onClick={() => setHunger(Math.max(0, hunger - 10))}>Nahrani 🥩</button>
+        <button onClick={() => setEnergy(Math.min(100, energy + 10))}>Odmah Odmori 😴</button>
+        <button onClick={() => setHappiness(Math.min(100, happiness + 10))}>Igraj se 🎾</button>
+      </div>
     </div>
   );
 };
 
 export default Care;
+
 
