@@ -1,35 +1,43 @@
 import React, { useEffect, useState } from "react";
+import { getMultipleDogs } from "../api/dogApi";
 
 const Adopt: React.FC = () => {
-  const [dogImage, setDogImage] = useState<string>("");
-
-  const fetchDog = async () => {
-    const res = await fetch("https://dog.ceo/api/breeds/image/random");
-    const data = await res.json();
-    setDogImage(data.message);
-  };
+  const [dogs, setDogs] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchDog();
+    getMultipleDogs(6)
+      .then((data) => {
+        setDogs(data.map((dog) => dog.message));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Greška pri učitavanju pasa:", err);
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) return <p>Učitavanje pasa...</p>;
 
   return (
     <div style={{ textAlign: "center" }}>
-      <h1>Usvoji psa</h1>
-      {dogImage && (
-        <img
-          src={dogImage}
-          alt="Pas"
-          style={{ width: "300px", borderRadius: "10px", margin: "10px" }}
-        />
-      )}
-      <div>
-        <button onClick={fetchDog} style={{ padding: "8px 15px" }}>
-          Prikaži drugog psa
-        </button>
+      <h2>Usvoji virtuelnog psa 🐶</h2>
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+        gap: "1rem",
+        padding: "1rem"
+      }}>
+        {dogs.map((url, index) => (
+          <div key={index}>
+            <img src={url} alt="Pas" style={{ width: "100%", borderRadius: "10px" }} />
+            <button style={{ marginTop: "0.5rem" }}>Usvoji</button>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
 export default Adopt;
+

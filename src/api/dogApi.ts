@@ -1,22 +1,22 @@
-const BASE = 'https://dog.ceo/api';
-
-export async function fetchBreedsList(): Promise<Record<string, string[]>> {
-  const res = await fetch(`${BASE}/breeds/list/all`);
-  const j = await res.json();
-  return j.message;
+// src/api/dogApi.ts
+export interface DogImage {
+  message: string;
+  status: string;
 }
 
-export async function fetchRandomImage(): Promise<string> {
-  const res = await fetch(`${BASE}/breeds/image/random`);
-  const j = await res.json();
-  return j.message;
+export async function getRandomDog(): Promise<DogImage> {
+  const res = await fetch('https://dog.ceo/api/breeds/image/random');
+  if (!res.ok) throw new Error("Greška pri preuzimanju slike psa");
+  return res.json();
 }
 
-export async function fetchRandomImageByBreed(breed: string): Promise<string> {
-  const res = await fetch(`${BASE}/breed/${breed}/images/random`);
-  const j = await res.json();
-  return j.message;
+export async function getMultipleDogs(count: number = 6): Promise<DogImage[]> {
+  const res = await fetch(`https://dog.ceo/api/breeds/image/random/${count}`);
+  if (!res.ok) throw new Error("Greška pri preuzimanju više slika pasa");
+  const data = await res.json();
+  return data.message.map((url: string) => ({ message: url, status: "success" }));
 }
 
-// Dodaj prazni export da TypeScript vidi modul
-export {};
+export {}; // 🔴 dodaj ovo da izbegneš TS1208 grešku
+
+
