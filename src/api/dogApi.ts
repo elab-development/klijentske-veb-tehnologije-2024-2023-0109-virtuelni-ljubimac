@@ -1,22 +1,17 @@
 // src/api/dogApi.ts
-export interface DogImage {
-  message: string;
-  status: string;
-}
-
-export async function getRandomDog(): Promise<DogImage> {
-  const res = await fetch('https://dog.ceo/api/breeds/image/random');
-  if (!res.ok) throw new Error("Greška pri preuzimanju slike psa");
-  return res.json();
-}
-
-export async function getMultipleDogs(count: number = 6): Promise<DogImage[]> {
-  const res = await fetch(`https://dog.ceo/api/breeds/image/random/${count}`);
-  if (!res.ok) throw new Error("Greška pri preuzimanju više slika pasa");
+export const fetchRandomDog = async (): Promise<string> => {
+  const res = await fetch("https://dog.ceo/api/breeds/image/random");
   const data = await res.json();
-  return data.message.map((url: string) => ({ message: url, status: "success" }));
-}
+  return data.message; // vraća URL slike psa
+};
 
-export {}; // 🔴 dodaj ovo da izbegneš TS1208 grešku
+// Funkcija za više pasa
+export const getMultipleDogs = async (count: number): Promise<string[]> => {
+  const promises = Array.from({ length: count }, () =>
+    fetch("https://dog.ceo/api/breeds/image/random").then((res) => res.json())
+  );
+  const results = await Promise.all(promises);
+  return results.map((r) => r.message);
+};
 
 
