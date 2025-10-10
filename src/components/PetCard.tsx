@@ -1,5 +1,5 @@
 import React from "react";
-import { Pet } from "../models/types"; 
+import { Pet } from "../interface/types"; 
 
 interface PetCardProps {
   pet: Pet;

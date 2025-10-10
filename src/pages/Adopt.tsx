@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PetCard from "../components/PetCard";
-import { Pet } from "../models/types";
+import { Pet } from "../interface/types";
 import { v4 as uuidv4 } from "uuid";
 import { getMultipleDogs } from "../api/dogApi";
 
