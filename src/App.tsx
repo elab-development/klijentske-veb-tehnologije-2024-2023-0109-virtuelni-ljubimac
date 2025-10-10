@@ -6,8 +6,11 @@ import Login from "./pages/Login";
 import Adopt from "./pages/Adopt";
 import Care from "./pages/Care";
 import Navbar from "./components/Navbar";
-
+import HappyUsers from "./pages/HappyUsers";
 import "./App.css";
+
+
+
 
 const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -43,6 +46,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/adopt" element={<Adopt />} />
           <Route path="/care" element={<Care />} />
+          <Route path="/happy-users" element={<HappyUsers />} />
         </Routes>
       </div>
     </Router>

@@ -1,0 +1,62 @@
+.happy-users {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #fff8f3;
+    color: #333;
+    min-height: 100vh;
+    margin-top: 80px; /* 🧩 ovo sprečava da navbar prekrije sadržaj */
+  }
+  
+  .happy-users h1 {
+    font-size: 2.5rem;
+    color: #ff7f50;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 40px;
+  }
+  
+  .reviews-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  
+  .review-card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .review-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .review-card h3 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .review-card p {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.4;
+  }
+  
