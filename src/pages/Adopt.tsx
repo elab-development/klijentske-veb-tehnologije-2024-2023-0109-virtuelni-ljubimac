@@ -3,24 +3,31 @@ import PetCard from "../components/PetCard";
 import { Pet } from "../interface/types";
 import { v4 as uuidv4 } from "uuid";
 import { getMultipleDogs } from "../api/dogApi";
+import DogFacts from "../components/DogFacts";
 
 const Adopt: React.FC = () => {
   const [pets, setPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
 
+
+  const [adoptedPets, setAdoptedPets] = useState<Pet[]>(() => {
+    const stored = localStorage.getItem("adoptedPets");
+    return stored ? JSON.parse(stored) : [];
+  });
+
   const petNames = [
-    "Max", "Luna", "Charlie", "Bella", "Rocky", "Daisy",
-    "Buddy", "Molly", "Cooper", "Lucy", "Bailey", "Sadie",
-    "Jack", "Lola", "Toby", "Maggie", "Oscar", "Chloe",
-    "Leo", "Ruby"
+    "Max","Luna","Charlie","Bella","Rocky","Daisy",
+    "Buddy","Molly","Cooper","Lucy","Bailey","Sadie",
+    "Jack","Lola","Toby","Maggie","Oscar","Chloe",
+    "Leo","Ruby"
   ];
 
   const petAges = [
-    3, 2, 5, 1, 4, 6,
-    3, 2, 5, 1, 4, 6,
-    2, 3, 4, 1, 5, 2,
-    3, 4
+    3,2,5,1,4,6,
+    3,2,5,1,4,6,
+    2,3,4,1,5,2,
+    3,4
   ];
 
   useEffect(() => {
@@ -43,8 +50,15 @@ const Adopt: React.FC = () => {
   }, []);
 
   const adoptPet = (petId: string) => {
-    alert("Uspesno ste usvojili ljubimca! 🐶");
-    setPets((prev) => prev.filter((p) => p.id !== petId));
+    const adoptedPet = pets.find(p => p.id === petId);
+    if (!adoptedPet) return;
+
+    const updatedAdopted = [...adoptedPets, adoptedPet];
+    setAdoptedPets(updatedAdopted);
+    localStorage.setItem("adoptedPets", JSON.stringify(updatedAdopted));
+
+    setPets(pets.filter(p => p.id !== petId));
+    alert(`Uspesno ste usvojili ${adoptedPet.name}! 🐶`);
   };
 
   const filteredPets = pets.filter((pet) =>
@@ -56,7 +70,19 @@ const Adopt: React.FC = () => {
   return (
     <div style={{ padding: "2rem" }}>
       <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>Usvojite psa</h2>
+      <div style={{
+  textAlign: "center",
+  marginBottom: "1.5rem",
+  backgroundColor: "#f0f8ff",
+  borderRadius: "10px",
+  padding: "1rem",
+  boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
+}}>
+  <h3 style={{ color: "#333" }}>📈 Statistika napretka</h3>
+  <p>Usvojeno ljubimaca: {adoptedPets.length}</p>
+</div>
 
+      {}
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
         <input
           type="text"
@@ -72,6 +98,7 @@ const Adopt: React.FC = () => {
         />
       </div>
 
+      {/* Lista pasa */}
       <div className="pets-grid" style={{
         display: "flex",
         flexWrap: "wrap",
@@ -79,6 +106,7 @@ const Adopt: React.FC = () => {
         gap: "1.5rem"
       }}>
         {filteredPets.length === 0 && <p>Nema pasa sa tim imenom.</p>}
+
         {filteredPets.map((pet) => (
           <div key={pet.id} style={{ textAlign: "center" }}>
             <PetCard pet={pet} />
@@ -99,10 +127,18 @@ const Adopt: React.FC = () => {
           </div>
         ))}
       </div>
+
+
+
+      {/* Dodatni API */}
+      <div style={{ marginTop: "2rem" }}>
+        <DogFacts />
+      </div>
     </div>
   );
 };
 
 export default Adopt;
+
 
 

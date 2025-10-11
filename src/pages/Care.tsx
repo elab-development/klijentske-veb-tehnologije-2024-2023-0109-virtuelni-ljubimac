@@ -9,7 +9,6 @@ const Care: React.FC = () => {
   const [energy, setEnergy] = useState(50);
   const [happiness, setHappiness] = useState(50);
 
-  // Određivanje slike psa prema raspoloženju
   const getDogImage = () => {
     if (hunger <30 && happiness > 70 && energy > 70) return happyDog;
     if (hunger >70 || happiness < 30 || energy < 30) return sadDog;
@@ -42,9 +41,29 @@ const Care: React.FC = () => {
         <button onClick={() => setHunger(Math.max(0, hunger - 10))}>Nahrani 🥩</button>
         <button onClick={() => setEnergy(Math.min(100, energy + 10))}>Odmah Odmori 😴</button>
         <button onClick={() => setHappiness(Math.min(100, happiness + 10))}>Igraj se 🎾</button>
+        <div style={{ marginTop: "2rem" }}>
+      <h3>📊 Napredak ljubimca</h3>
+      <div style={{
+        width: "300px",
+        backgroundColor: "#ddd",
+        borderRadius: "10px",
+        overflow: "hidden",
+        margin: "0 auto"
+      }}>
+        <div style={{
+          width: `${happiness}%`,
+          height: "20px",
+          backgroundColor: "#4CAF50"
+        }} />
+      </div>
+      <p>Sreća: {happiness}%</p>
+    </div>
       </div>
     </div>
+ 
   );
+
+
 };
 
 export default Care;
