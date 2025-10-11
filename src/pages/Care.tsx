@@ -56,7 +56,7 @@ const Care: React.FC = () => {
           backgroundColor: "#4CAF50"
         }} />
       </div>
-      <p>Sreća: {happiness}%</p>
+      <p>Raspolozenje:: {happiness}%</p>
     </div>
       </div>
     </div>
