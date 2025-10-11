@@ -1,9 +1,12 @@
 import React, { createContext, useState, ReactNode } from "react";
 import { Pet } from "../models/Pet";
+import { Adoption } from "../models/Adoption";
 
 interface PetContextType {
   pets: Pet[];
-  adoptPet: (petId: string) => void;
+  adoptedPets: Adoption[];
+  setPets: React.Dispatch<React.SetStateAction<Pet[]>>;
+  adoptPet: (pet: Pet) => void;
 }
 
 export const PetContext = createContext<PetContextType | undefined>(undefined);
@@ -14,16 +17,25 @@ interface Props {
 
 export const PetProvider: React.FC<Props> = ({ children }) => {
   const [pets, setPets] = useState<Pet[]>([]);
+  const [adoptedPets, setAdoptedPets] = useState<Adoption[]>(() => {
+    const stored = localStorage.getItem("adoptedPets");
+    return stored ? JSON.parse(stored) : [];
+  });
 
-  const adoptPet = (petId: string) => {
-    setPets((prev) => prev.filter((p) => p.id !== petId));
+  const adoptPet = (pet: Pet) => {
+    const adoption = new Adoption(pet);
+    setAdoptedPets((prev) => {
+      const updated = [...prev, adoption];
+      localStorage.setItem("adoptedPets", JSON.stringify(updated));
+      return updated;
+    });
+    setPets((prev) => prev.filter((p) => p.id !== pet.id));
+    alert(`Uspešno ste usvojili ${pet.name}! 🐶`);
   };
 
   return (
-    <PetContext.Provider value={{ pets, adoptPet }}>
+    <PetContext.Provider value={{ pets, adoptedPets, setPets, adoptPet }}>
       {children}
     </PetContext.Provider>
   );
 };
-// ili barem ovo da ga TS prepozna kao modul
-export {};

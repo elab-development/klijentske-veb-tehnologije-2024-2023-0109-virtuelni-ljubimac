@@ -13,8 +13,8 @@ export class Pet {
     this.image = image;
   }
 
-  greet() {
-    return `Hi, I am ${this.name}!`;
+  getInfo(): string {
+    return `${this.name} je ${this.age} godina star ${this.breed}.`;
   }
 }
 
